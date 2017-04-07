@@ -5,7 +5,6 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
-import pdb
 
 
 def get_bounding_box(image, threshold=1):
@@ -36,7 +35,6 @@ for letter in alphabet:
     letters.append(data)
 letters = np.array(letters, dtype=np.float32)
 labels = np.eye(len(letters))[np.arange(len(letters))]
-pdb.set_trace()
 
 
 # initialize the CNN model
@@ -67,7 +65,6 @@ batch_size = 64
 
 # augmentation configuration for training
 train_datagen = ImageDataGenerator(
-    rescale=1./255,
     featurewise_center=True,
     featurewise_std_normalization=True,
     rotation_range=20,
@@ -82,7 +79,9 @@ train_datagen.fit(letters)
 
 # augmentation configuration for testing:
 validation_datagen = ImageDataGenerator(
-    rescale=1./255,
+    rotation_range=40,
+    shear_range=0.4,
+    zoom_range=0.4,
     data_format='channels_first')
 
 # generator will read pictures found in array
