@@ -61,7 +61,7 @@ model.add(Activation('softmax'))
 
 model.compile(
     loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-batch_size = 64
+batch_size = 128
 
 # augmentation configuration for training
 train_datagen = ImageDataGenerator(
@@ -80,8 +80,8 @@ train_datagen.fit(letters)
 # augmentation configuration for testing:
 validation_datagen = ImageDataGenerator(
     rotation_range=40,
-    shear_range=0.4,
-    zoom_range=0.4,
+    shear_range=0.2,
+    zoom_range=0.2,
     data_format='channels_first')
 
 # generator will read pictures found in array
@@ -95,7 +95,7 @@ validation_generator = validation_datagen.flow(
 model.fit_generator(
         train_generator,
         steps_per_epoch=2000 // batch_size,
-        epochs=50,
+        epochs=500,
         validation_data=validation_generator,
         validation_steps=800 // batch_size)
 
